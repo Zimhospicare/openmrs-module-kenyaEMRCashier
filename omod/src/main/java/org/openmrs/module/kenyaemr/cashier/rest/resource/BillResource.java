@@ -21,6 +21,10 @@ import org.openmrs.User;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ProviderService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.kenyaemr.cashier.api.ICashPointService;
+import org.openmrs.module.kenyaemr.cashier.api.search.BillSearch;
+import org.openmrs.module.kenyaemr.cashier.base.resource.BaseRestDataResource;
+import org.openmrs.module.kenyaemr.cashier.rest.controller.base.CashierResourceController;
 import org.openmrs.module.kenyaemr.cashier.ModuleSettings;
 import org.openmrs.module.kenyaemr.cashier.api.IBillService;
 import org.openmrs.module.kenyaemr.cashier.api.ICashPointService;
@@ -55,6 +59,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.LinkedHashSet;
 
 /**
  * REST resource representing a {@link Bill}.
@@ -101,7 +106,8 @@ public class BillResource extends BaseRestDataResource<Bill> {
 	@PropertySetter("payments")
 	public void setBillPayments(Bill instance, Set<Payment> payments) {
 		if (instance.getPayments() == null) {
-			instance.setPayments(new HashSet<Payment>(payments.size()));
+			// instance.setPayments(new HashSet<Payment>(payments.size()));
+			instance.setPayments(new LinkedHashSet<Payment>(payments.size()));
 		}
 		BaseRestDataResource.syncCollection(instance.getPayments(), payments);
 		for (Payment payment : instance.getPayments()) {
@@ -253,8 +259,8 @@ public class BillResource extends BaseRestDataResource<Bill> {
 			AdministrationService adminService = Context.getAdministrationService();
 			boolean timesheetRequired;
 			try {
-				timesheetRequired = Boolean
-						.parseBoolean(adminService.getGlobalProperty(ModuleSettings.TIMESHEET_REQUIRED_PROPERTY));
+				timesheetRequired =
+						Boolean.parseBoolean(adminService.getGlobalProperty(ModuleSettings.TIMESHEET_REQUIRED_PROPERTY));
 			} catch (Exception e) {
 				timesheetRequired = false;
 			}
