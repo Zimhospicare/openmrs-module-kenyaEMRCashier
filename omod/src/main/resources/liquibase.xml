@@ -937,4 +937,20 @@
 		</addColumn>
 	</changeSet>
 
+	<changeSet id="openhmis.cashier-quotation-validity" author="abertnamanya">
+		<addColumn tableName="cashier_bill">
+			<column name="quota_validity_date" type="datetime">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+	<changeSet id="openhmis.cashier-quotation-bill_type_default_value" author="abertnamanya">
+		<sql>
+			ALTER TABLE cashier_bill
+			ALTER COLUMN bill_type
+			SET DEFAULT 'QUOTATION';
+		</sql>
+	</changeSet>
+
+
 </databaseChangeLog>

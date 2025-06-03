@@ -23,10 +23,7 @@ import org.openmrs.module.stockmanagement.api.model.StockItem;
 import java.math.BigDecimal;
 import java.security.AccessControlException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Model class that represents a list of {@link BillLineItem}s and {@link Payment}s created by a cashier for a patient.
@@ -46,6 +43,7 @@ public class Bill extends BaseOpenmrsData {
 	private Boolean receiptPrinted = false;
 	private String adjustmentReason;
 	private BillType billType;
+	private Date quotaValidityDate;
 
 	public BillType getBillType() {
 		return billType;
@@ -341,5 +339,13 @@ public class Bill extends BaseOpenmrsData {
 		String dateString = (changedStr != null) ? changedStr : createdStr;
 
 		return dateString;
+	}
+
+	public Date getQuotaValidityDate() {
+		return quotaValidityDate;
+	}
+
+	public void setQuotaValidityDate(Date quotaValidityDate) {
+		this.quotaValidityDate = quotaValidityDate;
 	}
 }

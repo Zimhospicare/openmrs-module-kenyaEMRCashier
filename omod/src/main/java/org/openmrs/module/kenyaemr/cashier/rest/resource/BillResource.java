@@ -31,6 +31,7 @@ import org.openmrs.module.kenyaemr.cashier.api.search.BillSearch;
 import org.openmrs.module.kenyaemr.cashier.api.util.RoundingUtil;
 import org.openmrs.module.kenyaemr.cashier.base.resource.BaseRestDataResource;
 import org.openmrs.module.kenyaemr.cashier.rest.controller.base.CashierResourceController;
+import org.openmrs.module.kenyaemr.cashier.util.Utils;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
@@ -73,6 +74,7 @@ public class BillResource extends BaseRestDataResource<Bill> {
 			description.addProperty("status");
 			description.addProperty("adjustmentReason");
 			description.addProperty("billType");
+			description.addProperty("quotaValidityDate");
 			description.addProperty("id");
 		}
 		return description;
@@ -138,6 +140,11 @@ public class BillResource extends BaseRestDataResource<Bill> {
 			instance.setBillType(billType);
 		}
 	}
+
+	@PropertySetter("quotaValidityDate")
+	public void setQuotaValidityDate(Bill instance, Date quotaValidityDate) {
+		instance.setQuotaValidityDate(quotaValidityDate);
+	}
 	@Override
 	public Bill save(Bill bill) {
 		// TODO: Test all the ways that this could fail
@@ -164,6 +171,9 @@ public class BillResource extends BaseRestDataResource<Bill> {
 			if (bill.getStatus() == null) {
 				bill.setStatus(BillStatus.PENDING);
 			}
+			bill.setQuotaValidityDate(Utils.future7daysDatetime());
+			System.out.println("Bill with Quote Date: " + bill.getQuotaValidityDate() + " has been saved.");
+
 			if (bill.getBillType() == null) {
 				bill.setBillType(BillType.QUOTATION);
 			}

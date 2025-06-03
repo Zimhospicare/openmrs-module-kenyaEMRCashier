@@ -255,6 +255,7 @@ public class GenerateBillFromOrderable implements AfterReturningAdvice {
             activeBill.setPatient(patient);
             activeBill.setStatus(BillStatus.PENDING);
             activeBill.setBillType(BillType.QUOTATION);
+            activeBill.setQuotaValidityDate(Utils.future7daysDatetime());
             // Bill Item
 
             billLineItem.setQuantity(quantity);
@@ -273,6 +274,7 @@ public class GenerateBillFromOrderable implements AfterReturningAdvice {
                 activeBill.addLineItem(billLineItem);
                 activeBill.setStatus(BillStatus.PENDING);
                 activeBill.setBillType(BillType.QUOTATION);
+                activeBill.setQuotaValidityDate(Utils.future7daysDatetime());
                 billService.save(activeBill);
             } else {
                 System.out.println("User is not a provider");

@@ -123,6 +123,8 @@
 			</type>
 		</property>
 
+		<property name="quotaValidityDate" type="java.util.Date" column="quota_validity_date" length="19" />
+
 		<!-- bi-directional many-to-one association to User -->
 		<many-to-one name="creator" class="org.openmrs.User" not-null="true" column="creator" />
 		<property name="dateCreated" type="java.util.Date" column="date_created" not-null="true" length="19" />
