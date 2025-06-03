@@ -131,6 +131,7 @@ public class BillServiceImpl extends BaseEntityDataServiceImpl<Bill> implements 
 			Bill billToUpdate = bills.get(0);
 			billToUpdate.setStatus(BillStatus.PENDING);
 			billToUpdate.setBillType(BillType.QUOTATION);
+			billToUpdate.setQuotaValidityDate(Utils.future7daysDatetime());
 			for (BillLineItem item: bill.getLineItems()) {
 				item.setBill(billToUpdate);
 				billToUpdate.getLineItems().add(item);

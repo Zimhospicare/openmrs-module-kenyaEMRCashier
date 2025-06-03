@@ -10,11 +10,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.openmrs.*;
 import org.openmrs.api.context.Context;
-// import org.openmrs.module.kenyacore.RegimenMappingUtils;
-// import org.openmrs.module.metadatadeploy.MetadataUtils;
-import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.util.PrivilegeConstants;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
@@ -28,6 +24,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -282,6 +280,10 @@ public class Utils {
         return sslsf;
     }
 
+    public static Date future7daysDatetime() {
+        LocalDateTime futureDateTime = LocalDateTime.now().plusDays(7);
+        return Date.from(futureDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
 }
 
 
