@@ -7,7 +7,7 @@ public class ReceiptUtil {
 
     protected ReceiptUtil() {}
 
-    public static String UNIQUE_PATIENT_NUMBER = "dfacd928-0370-4315-99d7-6ec1c9f7ae76";
+    public static String UNIQUE_PATIENT_NUMBER = "05a29f94-c0ed-11e2-94be-8c13b969e334";
 
     /**
      * Gets the PatientIdentifierType for a patient UPN
