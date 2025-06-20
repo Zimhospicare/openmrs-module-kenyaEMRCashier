@@ -56,6 +56,7 @@ import org.openmrs.module.kenyaemr.cashier.api.base.f.Action1;
 import org.openmrs.module.kenyaemr.cashier.api.model.*;
 import org.openmrs.module.kenyaemr.cashier.api.search.BillSearch;
 import org.openmrs.module.kenyaemr.cashier.api.util.PrivilegeConstants;
+import org.openmrs.module.kenyaemr.cashier.api.util.ReceiptUtil;
 import org.openmrs.module.kenyaemr.cashier.util.Utils;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,7 +82,7 @@ public class BillServiceImpl extends BaseEntityDataServiceImpl<Bill> implements 
 	private static final Log LOG = LogFactory.getLog(BillServiceImpl.class);
 	private static final String GP_DEFAULT_LOCATION = "kenyaemr.defaultLocation";
 	private static final String GP_FACILITY_ADDRESS_DETAILS = "kenyaemr.cashier.receipt.facilityAddress";
-	public static final String OPENMRS_ID = "dfacd928-0370-4315-99d7-6ec1c9f7ae76";
+	public static final String OPENMRS_ID = ReceiptUtil.UNIQUE_PATIENT_NUMBER;
 	public static final String PAYMENT_REFERENCE_ATTRIBUTE = "d453e528-0264-4d6e-ae23-bc0b777e1146";
 
 
@@ -388,7 +389,7 @@ public class BillServiceImpl extends BaseEntityDataServiceImpl<Bill> implements 
 
 		GlobalProperty gp = Context.getAdministrationService().getGlobalPropertyObject(GP_DEFAULT_LOCATION);
 		GlobalProperty gpFacilityAddress = Context.getAdministrationService().getGlobalPropertyObject(GP_FACILITY_ADDRESS_DETAILS);
-		Text facilityName = new Text(gp != null && gp.getValue() != null ? ((Location) gp.getValue()).getName() : bill.getCashPoint().getLocation().getName());
+		Text facilityName = new Text(gp != null && Context.getLocationService().getLocation(Integer.parseInt((String) gp.getValue())) != null ? Context.getLocationService().getLocation(Integer.parseInt((String) gp.getValue())).getName() : bill.getCashPoint().getLocation().getName());
 
 		Text facilityAddressDetails = new Text(gpFacilityAddress != null && gpFacilityAddress.getValue() != null ? gpFacilityAddress.getPropertyValue() : "");
 		Paragraph logoSection = new Paragraph();
